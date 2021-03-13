@@ -2,10 +2,11 @@ extends ItemList
 
 onready var item_list_node = get_node(".")
 onready var structures = [
-		Structure.new("Pump", 2000, 1, "res://assets/sprites/pump.png"),
-		Structure.new("Cannon", 100, 1, "res://assets/sprites/cannon.png"),
-		Structure.new("Bomb", 500, 1, "res://assets/sprites/bomb.png")
-	]
+	Structure.new("Pump", 2000, 1, "res://assets/sprites/pump.png"),
+	Structure.new("Cannon", 100, 1, "res://assets/sprites/cannon.png"),
+	Structure.new("Bomb", 500, 1, "res://assets/sprites/bomb.png")
+]
+
 
 class Structure:
 	var name: String

@@ -6,6 +6,7 @@ onready var structures = {
 	"Cannon": preload("res://objects/cannon.tscn"),
 }
 
+
 func _input(event):
 	# Mouse in viewport coordinates.
 	if not event is InputEventMouseButton or not event.is_pressed():
@@ -15,7 +16,8 @@ func _input(event):
 	if clicked_at.x > C.GRID_COLS or clicked_at.y > C.GRID_ROWS:
 		return
 	add_pump(clicked_at)
-	
+
+
 func add_pump(position):
 	if not G.selected_structure:
 		return false
