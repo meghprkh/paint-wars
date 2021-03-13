@@ -40,3 +40,4 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="item_selected" from="structureList" to="structureList" method="_on_structureList_item_selected"]

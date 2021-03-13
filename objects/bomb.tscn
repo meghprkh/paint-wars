@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://assets/sprites/pump.png" type="Texture" id=1]
+[ext_resource path="res://assets/sprites/bomb.png" type="Texture" id=1]
 
-[node name="pump" type="Node2D"]
+[node name="bomb" type="Node2D"]
 
 [node name="sprite" type="Sprite" parent="."]
 position = Vector2( 16, 16 )
