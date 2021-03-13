@@ -36,6 +36,7 @@ margin_top = 80.0
 margin_right = 128.0
 margin_bottom = 384.0
 icon_mode = 0
+fixed_icon_size = Vector2( 48, 48 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false

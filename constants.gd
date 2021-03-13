@@ -9,12 +9,17 @@ const GRID_ROWS = 18
 
 const SPEED = 5
 
-enum Player {
-	P1,
-	P2
-}
+enum Player { P1, P2 }
 
 const PlayerColors = {
 	Player.P1: Color(0.15, 0.95, 0.15),
 	Player.P2: Color(0.15, 0, 0.95),
+}
+
+enum Structures { PUMP, CANNON, BOMB }
+
+const StructureNames = {
+	Structures.PUMP: "Pump",
+	Structures.CANNON: "Cannon",
+	Structures.BOMB: "Bomb",
 }

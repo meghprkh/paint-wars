@@ -1,9 +1,9 @@
 extends Node2D
 
 onready var structures = {
-	"Pump": preload("res://objects/pump.tscn"),
-	"Bomb": preload("res://objects/bomb.tscn"),
-	"Cannon": preload("res://objects/cannon.tscn"),
+	C.Structures.PUMP: preload("res://objects/pump.tscn"),
+	C.Structures.BOMB: preload("res://objects/bomb.tscn"),
+	C.Structures.CANNON: preload("res://objects/cannon.tscn"),
 }
 
 
@@ -20,12 +20,14 @@ func _input(event):
 	var player = C.Player.P1
 	if Input.is_action_pressed("player2_modifier"):
 		player = C.Player.P2
-	add_structure(player, G.selected_structure.name, clicked_at)
+	add_structure(player, G.selected_structure.structure, clicked_at)
 
 
-func add_structure(player, structure_name, position):
-	var structure = structures[structure_name].instance()
+func add_structure(player, structure_id, position):
+	var structure = structures[structure_id].instance()
 	structure.set_player(player)
 	structure.global_position = position * C.CELL_SIZE + self.global_position
 	$blocks.add_child(structure)
-	print("Added ", structure_name, " for ", C.Player.keys()[player], " at ", position)
+	print(
+		"Added ", C.StructureNames[structure_id], " for ", C.Player.keys()[player], " at ", position
+	)
