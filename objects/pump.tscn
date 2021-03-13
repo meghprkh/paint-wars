@@ -5,4 +5,6 @@
 [node name="pump" type="Node2D"]
 
 [node name="sprite" type="Sprite" parent="."]
+position = Vector2( 16, 16 )
+scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 1 )
