@@ -22,6 +22,7 @@ config/icon="res://assets/sprites/godot.png"
 [autoload]
 
 C="*res://constants.gd"
+G="*res://globals.gd"
 
 [display]
 

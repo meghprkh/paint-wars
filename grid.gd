@@ -1,6 +1,10 @@
 extends Node2D
 
-onready var pump_scene = preload("res://objects/pump.tscn")
+onready var structures = {
+	"Pump": preload("res://objects/pump.tscn"),
+	"Bomb": preload("res://objects/bomb.tscn"),
+	"Cannon": preload("res://objects/cannon.tscn"),
+}
 
 func _input(event):
 	# Mouse in viewport coordinates.
@@ -13,7 +17,9 @@ func _input(event):
 	add_pump(clicked_at)
 	
 func add_pump(position):
-	var pump = pump_scene.instance()
-	pump.global_position = position * C.CELL_SIZE + self.global_position
-	$blocks.add_child(pump)
-	print("Added pump at ", position)
+	if not G.selected_structure:
+		return false
+	var structure = structures[G.selected_structure.name].instance()
+	structure.global_position = position * C.CELL_SIZE + self.global_position
+	$blocks.add_child(structure)
+	print("Added at ", position, G.selected_structure.name)
