@@ -23,6 +23,10 @@ config/icon="res://assets/sprites/godot.png"
 
 C="*res://constants.gd"
 
+[display]
+
+window/size/height=576
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"
