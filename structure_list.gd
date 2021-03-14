@@ -50,9 +50,9 @@ func _process(_delta):
 			G.player_credits[C.Player.P1] >= cur_structure.cost
 			or G.player_credits[C.Player.P2] >= cur_structure.cost
 		):
-			item_list_node.set_item_disabled(i, true)
-		else:
 			item_list_node.set_item_disabled(i, false)
+		else:
+			item_list_node.set_item_disabled(i, true)
 
 
 func _on_structure_list_item_selected(index):
