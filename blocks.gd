@@ -9,6 +9,8 @@ onready var capture_rate = 10  # seconds until full - replace with structure spe
 onready var spillover_rate = 0.5  # times the capture rate
 onready var capture_threshold = 0.8  # percentage neede to claim tile
 onready var pump_speed = 20  # credits per second
+onready var bomb_drain_rate = 2  # credits per second
+onready var bomb_spread_speed = 100  # credits per second
 
 
 func create_value_matrix(w, h):
@@ -54,8 +56,22 @@ func process_spillover(delta):
 						hit(col_idx + neighbor.x, row_idx + neighbor.y, -spillover)
 
 
-func process_pump(delta, player):
+func process_pump(delta, player, x, y):
 	G.player_credits[player] += delta * pump_speed
+	var pump_strength = delta / capture_rate
+	if player == C.Player.P2:
+		pump_strength *= -1
+	hit(x, y, pump_strength)
+
+
+func process_bomb(delta, player, x, y):
+	# Bomb is only active is there is enough credits
+	var bomb_strength = delta * bomb_spread_speed
+	if G.player_credits[player] > bomb_drain_rate:
+		G.player_credits[player] -= delta * bomb_drain_rate
+		if player == C.Player.P2:
+			bomb_strength *= -1
+		hit(x, y, bomb_strength)
 
 
 func _physics_process(delta):
@@ -70,5 +86,6 @@ func _physics_process(delta):
 			paint_strength *= -1
 		var cur_structure = child.get_type()
 		if cur_structure == C.StructureNames[C.Structures.PUMP]:
-			process_pump(delta, cur_player)
-		hit(tile_x, tile_y, paint_strength)
+			process_pump(delta, cur_player, tile_x, tile_y)
+		elif cur_structure == C.StructureNames[C.Structures.BOMB]:
+			process_bomb(delta, cur_player, tile_x, tile_y)
