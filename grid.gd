@@ -6,6 +6,11 @@ onready var structures = {
 	C.Structures.CANNON: preload("res://objects/cannon.tscn"),
 }
 
+# TODO: Move to global
+onready var structure_costs = {
+	C.Structures.PUMP: 2000, C.Structures.BOMB: 500, C.Structures.CANNON: 100
+}
+
 
 func _input(event):
 	# Mouse in viewport coordinates.
@@ -25,7 +30,14 @@ func _input(event):
 
 func add_structure(player, structure_id, position):
 	var structure = structures[structure_id].instance()
+	if G.player_credits[player] < structure_costs[structure_id]:
+		print(C.Player.keys()[player], " has insufficient credits")
+		return
+	G.player_credits[player] -= structure_costs[structure_id]
 	structure.set_player(player)
+	structure.set_grid_x(position.x)
+	structure.set_grid_y(position.y)
+	structure.set_type(C.StructureNames[structure_id])
 	structure.global_position = position * C.CELL_SIZE + self.global_position
 	$blocks.add_child(structure)
 	print(
