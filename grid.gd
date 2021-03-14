@@ -26,6 +26,8 @@ func _input(event):
 func add_structure(player, structure_id, position):
 	var structure = structures[structure_id].instance()
 	structure.set_player(player)
+	structure.set_grid_x(position.x)
+	structure.set_grid_y(position.y)
 	structure.global_position = position * C.CELL_SIZE + self.global_position
 	$blocks.add_child(structure)
 	print(
