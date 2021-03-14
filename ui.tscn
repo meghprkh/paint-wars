@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://ui_theme.tres" type="Theme" id=1]
-[ext_resource path="res://structureList.gd" type="Script" id=2]
+[ext_resource path="res://structure_list.gd" type="Script" id=2]
+[ext_resource path="res://paint.gd" type="Script" id=3]
 
 [node name="ui" type="Control"]
 anchor_right = 1.0
@@ -27,11 +28,12 @@ text = "Paint
 10"
 align = 1
 valign = 1
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="structureList" type="ItemList" parent="."]
+[node name="structure_list" type="ItemList" parent="."]
 margin_top = 80.0
 margin_right = 128.0
 margin_bottom = 384.0
@@ -41,4 +43,4 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="item_selected" from="structureList" to="structureList" method="_on_structureList_item_selected"]
+[connection signal="item_selected" from="structure_list" to="structure_list" method="_on_structure_list_item_selected"]

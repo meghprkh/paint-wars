@@ -8,6 +8,7 @@ onready var coverage_map = create_value_matrix(C.GRID_COLS, C.GRID_ROWS)
 onready var capture_rate = 10  # seconds until full - replace with structure speed
 onready var spillover_rate = 0.5  # times the capture rate
 onready var capture_threshold = 0.8  # percentage neede to claim tile
+onready var pump_speed = 20  # credits per second
 
 
 func create_value_matrix(w, h):
@@ -53,6 +54,10 @@ func process_spillover(delta):
 						hit(col_idx + neighbor.x, row_idx + neighbor.y, -spillover)
 
 
+func process_pump(delta, player):
+	G.player_credits[player] += delta * pump_speed
+
+
 func _physics_process(delta):
 	process_spillover(delta)
 	for child in blocks_node.get_children():
@@ -60,6 +65,10 @@ func _physics_process(delta):
 		var tile_x = child.get_grid_x()
 		var tile_y = child.get_grid_y()
 		var paint_strength = delta / capture_rate
-		if child.get_player() == C.Player.P2:
+		var cur_player = child.get_player()
+		if cur_player == C.Player.P2:
 			paint_strength *= -1
+		var cur_structure = child.get_type()
+		if cur_structure == C.StructureNames[C.Structures.PUMP]:
+			process_pump(delta, cur_player)
 		hit(tile_x, tile_y, paint_strength)

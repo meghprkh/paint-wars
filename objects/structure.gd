@@ -3,6 +3,7 @@ extends Node
 var _player = C.Player.P1
 var _grid_x = 0
 var _grid_y = 0
+var _type = C.StructureNames[C.Structures.PUMP]
 
 
 func _ready():
@@ -32,6 +33,14 @@ func get_grid_x():
 
 func get_grid_y():
 	return _grid_y
+
+
+func set_type(type):
+	_type = type
+
+
+func get_type():
+	return _type
 
 
 func set_color():

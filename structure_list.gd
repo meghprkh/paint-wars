@@ -6,6 +6,14 @@ onready var structures = [
 	Structure.new(C.Structures.CANNON, 100, 1, preload("res://assets/sprites/cannon.png")),
 	Structure.new(C.Structures.BOMB, 500, 1, preload("res://assets/sprites/bomb.png")),
 ]
+onready var structure_costs = make_cost_map(structures)
+
+
+func make_cost_map(structure_list):
+	var structure_cost_map = {}
+	for structure in structure_list:
+		structure_cost_map[structure.name] = structure.cost
+	return structure_cost_map
 
 
 class Structure:
@@ -34,6 +42,19 @@ func _ready():
 		item_list_node.add_item(item_label, structure.texture, true)
 
 
-func _on_structureList_item_selected(index):
+func _process(_delta):
+	for i in range(item_list_node.get_item_count()):
+		# check both players for demo
+		var cur_structure = structures[i]
+		if (
+			G.player_credits[C.Player.P1] >= cur_structure.cost
+			or G.player_credits[C.Player.P2] >= cur_structure.cost
+		):
+			item_list_node.set_item_disabled(i, true)
+		else:
+			item_list_node.set_item_disabled(i, false)
+
+
+func _on_structure_list_item_selected(index):
 	var structure = structures[index]
 	G.selected_structure = structure
