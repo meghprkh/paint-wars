@@ -5,6 +5,9 @@ onready var tileset_node = tilemap_node.tile_set
 onready var blocks_node = get_node(".")
 # Records accumulated paint control per cell
 onready var coverage_map = create_value_matrix(C.GRID_COLS, C.GRID_ROWS)
+onready var capture_rate = 10  # seconds until full - replace with structure speed
+onready var spillover_rate = 0.5  # times the capture rate
+onready var capture_threshold = 0.8  # percentage neede to claim tile
 
 
 func create_value_matrix(w, h):
@@ -35,8 +38,23 @@ func hit(x, y, val):
 	#tilemap_node.set_cell(x, y, tile_id)
 
 
+func process_spillover(delta):
+	# All cardinal neighbours receive paint from neigbhoring capture tiles
+	var spillover = (delta / capture_rate) * spillover_rate
+	for col_idx in range(C.GRID_COLS):
+		for row_idx in range(C.GRID_ROWS):
+			var cell_val = coverage_map[col_idx][row_idx]
+			var neighbour_list = [Vector2(0, 1), Vector2(1, 0), Vector2(0, -1), Vector2(-1, 0)]
+			if abs(cell_val) >= capture_threshold:
+				for neighbor in neighbour_list:
+					if cell_val > 0:
+						hit(col_idx + neighbor.x, row_idx + neighbor.y, spillover)
+					else:
+						hit(col_idx + neighbor.x, row_idx + neighbor.y, -spillover)
+
+
 func _physics_process(delta):
-	var capture_rate = 10  # seconds until full - replace with structure speed
+	process_spillover(delta)
 	for child in blocks_node.get_children():
 		# For each structure, read in its effects and strengths and apply to board
 		var tile_x = child.get_grid_x()
