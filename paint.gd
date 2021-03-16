@@ -12,4 +12,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	self.text = "Paint\n%d" % G.player_credits[C.Player.P1]
+	self.text = "Paint\nP1: %d\nP2: %d" % [
+		G.player_credits[C.Player.P1],
+		G.player_credits[C.Player.P2],
+	]
